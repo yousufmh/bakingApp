@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">BakingApp</string>
+    <string name="name">Recipe Name</string>
+    <string name="serving">Serving</string>
+    <string name="person">Person</string>
+    <string name="error_internet">Internet Connection Error</string>
+    <string name="retry">Retry</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="ingredint">Recipe Ingredent</string>
+    <string name="step_description">Step Full Description</string>
+</resources>
