@@ -4,12 +4,14 @@ public class Step {
 
     private int id;
     private String shortDescription;
+    private String description;
     private String videoURL;
     private String thumbnailURL;
 
     public Step() {
         this.id = 0;
         this.shortDescription = "";
+        this.description = "";
         this.videoURL = "";
         this.thumbnailURL = "";
     }
@@ -28,6 +30,14 @@ public class Step {
 
     public void setShortDescription(String shortDescription) {
         this.shortDescription = shortDescription;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getVideoURL() {

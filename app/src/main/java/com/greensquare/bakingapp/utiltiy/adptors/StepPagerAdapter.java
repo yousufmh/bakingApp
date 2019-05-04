@@ -1,11 +1,10 @@
 package com.greensquare.bakingapp.utiltiy.adptors;
 
-import android.support.annotation.NonNull;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.util.Log;
-import android.view.ViewGroup;
 
 import com.greensquare.bakingapp.models.Singalton;
 import com.greensquare.bakingapp.models.Step;
@@ -13,32 +12,39 @@ import com.greensquare.bakingapp.ui.StepFragment;
 
 import java.util.ArrayList;
 
-public class StepPagerAdapter extends FragmentPagerAdapter {
+public class StepPagerAdapter extends FragmentStatePagerAdapter {
 
     private ArrayList<Step> steps;
+
     public StepPagerAdapter(FragmentManager fm,ArrayList<Step> steps) {
 
         super(fm);
         this.steps = steps;
     }
 
-    @NonNull
-    @Override
-    public Object instantiateItem(@NonNull ViewGroup container, int position) {
-        return super.instantiateItem(container, position);
-    }
 
-    @Override
-    public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-        super.destroyItem(container, position, object);
-    }
 
     @Override
     public Fragment getItem(int i) {
         Step step = steps.get(i);
-        Singalton.getInstance().setStep(step);
+
+
+        StepFragment fragment = new StepFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt("id", step.getId());
+        bundle.putString("ShortDescription", step.getShortDescription());
+        bundle.putString("Description", step.getDescription());
+        bundle.putString("ThumbnailURL", step.getThumbnailURL());
+        bundle.putString("VideoURL", step.getVideoURL());
+
+        fragment.setArguments(bundle);
+        //StepFragment stepFragment = StepFragment.newInstance(step);
+        Log.d("StepPager Adapter","Current Step Position "+i);
         Log.d("StepPager Adapter","Current Step is "+step.getShortDescription());
-        return new StepFragment();
+        Log.d("StepPager Adapter","Current Step Thumbnail is "+step.getThumbnailURL());
+        Log.d("StepPager Adapter","Current Step Video is "+step.getVideoURL());
+
+        return fragment;
     }
 
     @Override
