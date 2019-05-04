@@ -10,4 +10,5 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="ingredint">Recipe Ingredent</string>
     <string name="step_description">Step Full Description</string>
+    <string name="swip">Swip Left and Right to move Back and forth between Steps.</string>
 </resources>

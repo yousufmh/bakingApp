@@ -1,8 +1,10 @@
 package com.greensquare.bakingapp.ui;
 
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 
 import com.greensquare.bakingapp.R;
 import com.greensquare.bakingapp.models.Singalton;
@@ -24,6 +26,7 @@ public class StepDetailActivity extends AppCompatActivity {
         StepPagerAdapter adapter = new StepPagerAdapter(getSupportFragmentManager(),data.getSteps());
         pager.setAdapter(adapter);
         pager.setCurrentItem(position);
+        Snackbar.make(pager,getResources().getString(R.string.swip),Snackbar.LENGTH_INDEFINITE).show();
 
     }
 }

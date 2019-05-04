@@ -3,6 +3,8 @@ package com.greensquare.bakingapp.models;
 import android.content.Context;
 
 
+import com.google.android.exoplayer2.SimpleExoPlayer;
+
 import java.util.ArrayList;
 
 import retrofit2.Retrofit;
@@ -19,12 +21,16 @@ public class Singalton {
     private ArrayList<Ingredient> ingredients;
     private Step step;
     private ArrayList<Step> steps;
+    private SimpleExoPlayer exoPlayer;
+
 
     private Singalton(){
         retrofit = new Retrofit.Builder()
                 .baseUrl("https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
+
+
 
         recipe = new Recipe();
         recipes = new ArrayList<>();
@@ -42,6 +48,15 @@ public class Singalton {
         }
         return instance;
     }
+
+    public SimpleExoPlayer getExoPlayer() {
+        return exoPlayer;
+    }
+
+    public void setExoPlayer(SimpleExoPlayer exoPlayer) {
+        this.exoPlayer = exoPlayer;
+    }
+
     public Retrofit getRetrofit() {
         return retrofit;
     }
@@ -93,4 +108,7 @@ public class Singalton {
     public void setSteps(ArrayList<Step> steps) {
         this.steps = steps;
     }
+
+
+
 }
