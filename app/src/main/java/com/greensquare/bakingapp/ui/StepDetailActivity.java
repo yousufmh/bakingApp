@@ -26,7 +26,6 @@ public class StepDetailActivity extends AppCompatActivity {
         StepPagerAdapter adapter = new StepPagerAdapter(getSupportFragmentManager(),data.getSteps());
         pager.setAdapter(adapter);
         pager.setCurrentItem(position);
-        Snackbar.make(pager,getResources().getString(R.string.swip),Snackbar.LENGTH_INDEFINITE).show();
 
     }
 }
