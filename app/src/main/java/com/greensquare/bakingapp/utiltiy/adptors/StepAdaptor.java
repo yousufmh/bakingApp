@@ -1,9 +1,12 @@
 package com.greensquare.bakingapp.utiltiy.adptors;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -65,8 +68,22 @@ public class StepAdaptor extends RecyclerView.Adapter<StepAdaptor.StepVH> {
             @Override
             public void onClick(View view) {
                 data.setStep(step);
-                context.startActivity(new Intent(context, StepDetailActivity.class));
+                if(!data.isTablet()) {
+                    context.startActivity(new Intent(context, StepDetailActivity.class));
+                }else{
+                    FragmentManager fm = ((FragmentActivity)context).getSupportFragmentManager();
+                    StepFragment fragment = new StepFragment();
 
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("id", step.getId());
+                    bundle.putString("ShortDescription", step.getShortDescription());
+                    bundle.putString("Description", step.getDescription());
+                    bundle.putString("ThumbnailURL", step.getThumbnailURL());
+                    bundle.putString("VideoURL", step.getVideoURL());
+                    fragment.setArguments(bundle);
+                    fm.beginTransaction().replace(R.id.step_detail,fragment).commit();
+
+                }
             }
         });
     }

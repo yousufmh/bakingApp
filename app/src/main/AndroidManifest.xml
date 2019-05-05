@@ -12,9 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ui.StepDetailActivity"
-            android:configChanges="orientation|screenSize|layoutDirection">
-            
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode">
         </activity>
+
         <activity android:name=".ui.RecipeDetailActivity" />
         <activity android:name=".ui.RecipesActivity">
             <intent-filter>

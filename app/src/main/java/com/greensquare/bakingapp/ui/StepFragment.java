@@ -1,6 +1,9 @@
 package com.greensquare.bakingapp.ui;
 
 
+import android.annotation.SuppressLint;
+import android.content.res.Configuration;
+import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,11 +16,13 @@ import android.widget.TextView;
 
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.DefaultRenderersFactory;
+import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
 import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
+import com.google.android.exoplayer2.ui.AspectRatioFrameLayout;
 import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
@@ -127,10 +132,50 @@ public class StepFragment extends Fragment {
         MediaSource source = new ExtractorMediaSource.Factory(
                 new DefaultHttpDataSourceFactory("BakingApp")).createMediaSource(videoUri);
 
-        exoPlayer.prepare(source,false,true);
+        exoPlayer.prepare(source);
 
-        data.setExoPlayer(exoPlayer);
+       // data.setExoPlayer(exoPlayer);
     }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if(data.isTablet()){
+            return;
+        }
+
+        if(newConfig.orientation== Configuration.ORIENTATION_LANDSCAPE){
+            Log.d(TAG, "The Orientation is LandScape");
+            enterFullScreen();
+        }else {
+            exitFullScreen();
+        }
+
+    }
+
+    @SuppressLint("InlinedApi")
+    public void enterFullScreen() {
+
+        playerUI.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
+                | View.SYSTEM_UI_FLAG_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+        playerUI.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FIT);
+    }
+
+    @SuppressLint("InlinedApi")
+    public void exitFullScreen() {
+
+        playerUI.setSystemUiVisibility(PlayerView.SYSTEM_UI_FLAG_LOW_PROFILE
+                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                | PlayerView.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                |View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+                );
+        playerUI.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FIT);
+    }
+
 
     @Override
     public void onStart() {
@@ -156,7 +201,7 @@ public class StepFragment extends Fragment {
             exoPlayer.setPlayWhenReady(false);
             exoPlayer.release();
             exoPlayer = null;
-            data.setExoPlayer(exoPlayer);
+           // data.setExoPlayer(exoPlayer);
             Log.d(TAG,"Inside onPause and Exo is null");
         }
     }
@@ -167,9 +212,9 @@ public class StepFragment extends Fragment {
         Log.d(TAG,"Inside onStop");
 
         if(exoPlayer!=null){
-        exoPlayer.release();
-        exoPlayer=null;
-        data.setExoPlayer(exoPlayer);
+            exoPlayer.release();
+            exoPlayer=null;
+          //  data.setExoPlayer(exoPlayer);
             Log.d(TAG,"Inside onStop and Exo is null");
 
         }

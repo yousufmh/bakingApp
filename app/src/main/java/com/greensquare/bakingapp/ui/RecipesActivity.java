@@ -4,8 +4,10 @@ import android.os.Parcelable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.view.View;
 
 import com.greensquare.bakingapp.R;
@@ -24,6 +26,7 @@ public class RecipesActivity extends AppCompatActivity {
     private ArrayList<Recipe> recipesArray;
     private Parcelable savedLayout = null;
     private RetrofitConnection connect;
+    RecyclerView.LayoutManager layoutManager;
 
 
     private final String LAYOUT_POSTION = "POSITION";
@@ -41,7 +44,14 @@ public class RecipesActivity extends AppCompatActivity {
         rv = findViewById(R.id.recipe_rv);
         recipesArray = new ArrayList<>();
         adaptor = new RecipeAdaptor(this, recipesArray);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        if(findViewById(R.id.tablet_mood)!=null){
+            int count = columnsNumber();
+            data.setTablet(true);
+            layoutManager = new GridLayoutManager(getApplicationContext(), count);
+        }else {
+            data.setTablet(false);
+            layoutManager = new LinearLayoutManager(this);
+        }
         rv.setLayoutManager(layoutManager);
         rv.setAdapter(adaptor);
         connect = new RetrofitConnection(rv);
@@ -84,6 +94,20 @@ public class RecipesActivity extends AppCompatActivity {
             }
         });
     }
+
+    private int columnsNumber(){
+        DisplayMetrics display = getResources().getDisplayMetrics();
+        int columnsCount =(int)(display.widthPixels /display.density)/200 ;
+
+        if(columnsCount<2){
+            columnsCount = 2;
+        }
+
+        return columnsCount;
+
+
+    }
+
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {

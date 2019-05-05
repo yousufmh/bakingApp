@@ -22,6 +22,7 @@ public class Singalton {
     private Step step;
     private ArrayList<Step> steps;
     private SimpleExoPlayer exoPlayer;
+    private boolean isTablet;
 
 
     private Singalton(){
@@ -38,6 +39,7 @@ public class Singalton {
         ingredients = new ArrayList<>();
         step = new Step();
         steps = new ArrayList<>();
+        isTablet = false;
 
     }
 
@@ -109,6 +111,11 @@ public class Singalton {
         this.steps = steps;
     }
 
+    public boolean isTablet() {
+        return isTablet;
+    }
 
-
+    public void setTablet(boolean tablet) {
+        isTablet = tablet;
+    }
 }
