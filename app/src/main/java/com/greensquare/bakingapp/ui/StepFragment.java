@@ -54,7 +54,9 @@ public class StepFragment extends Fragment {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        visibleToUser = isVisibleToUser;
+        if(exoPlayer!=null){
+            exoPlayer.setPlayWhenReady(false);
+        }
 
     }
 

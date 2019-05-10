@@ -6,9 +6,13 @@
     <string name="error_internet">Internet Connection Error</string>
     <string name="retry">Retry</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="ingredint">Recipe Ingredent</string>
+    <string name="ingredint">Set Ingredient to Widget</string>
     <string name="step_description">Step Full Description</string>
     <string name="swip">Swip Left and Right to move Back and forth between Steps.</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+    <string name="configure">Configure</string>
+    <string name="empty_recip">Click to select a Recipe Ingredint</string>
+    <string name="empty_list">The List is Empty</string>
 </resources>

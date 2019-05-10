@@ -1,5 +1,6 @@
 package com.greensquare.bakingapp.models;
 
+import android.appwidget.AppWidgetManager;
 import android.content.Context;
 
 
@@ -23,6 +24,7 @@ public class Singalton {
     private ArrayList<Step> steps;
     private SimpleExoPlayer exoPlayer;
     private boolean isTablet;
+    private int widgetId;
 
 
     private Singalton(){
@@ -40,6 +42,7 @@ public class Singalton {
         step = new Step();
         steps = new ArrayList<>();
         isTablet = false;
+        widgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
 
     }
 
@@ -117,5 +120,13 @@ public class Singalton {
 
     public void setTablet(boolean tablet) {
         isTablet = tablet;
+    }
+
+    public void setWidgetId(int widgetId) {
+        this.widgetId = widgetId;
+    }
+
+    public int getWidgetId() {
+        return widgetId;
     }
 }
