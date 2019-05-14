@@ -2,6 +2,7 @@ package com.greensquare.bakingapp.ui;
 
 
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -25,34 +26,48 @@ public class StepsListFragment extends Fragment {
 
 
     public StepsListFragment() {
-        // Required empty public constructor
     }
 
     private StepAdaptor adaptor;
     private RecyclerView.LayoutManager layout;
+    private RecyclerView rv;
     private ArrayList<Step> steps;
     private Singalton data;
+    private Parcelable savedLayout = null;
+    private final String LAYOUT_POSTION = "POSITION";
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
+
+        if(savedInstanceState!=null) {
+            if (savedInstanceState.containsKey(LAYOUT_POSTION)) {
+                savedLayout = savedInstanceState.getParcelable(LAYOUT_POSTION);
+            }
+        }
+
         View view = inflater.inflate(R.layout.fragment_steps_list, container, false);
         data = Singalton.getInstance();
         steps= new ArrayList<>();
         steps.addAll(data.getSteps());
-        RecyclerView rv = view.findViewById(R.id.steps_rv);
+        rv = view.findViewById(R.id.steps_rv);
         layout = new LinearLayoutManager(this.getActivity());
         adaptor = new StepAdaptor(this.getActivity(),steps);
         rv.setAdapter(adaptor);
         rv.setLayoutManager(layout);
-
+        if(savedLayout!=null){
+            rv.getLayoutManager().onRestoreInstanceState(savedLayout);
+        }
 
         return view;
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(LAYOUT_POSTION, rv.getLayoutManager().onSaveInstanceState());
 
     }
+
+
 }

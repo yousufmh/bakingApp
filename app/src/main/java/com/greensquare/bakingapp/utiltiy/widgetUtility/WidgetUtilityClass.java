@@ -1,27 +1,13 @@
 package com.greensquare.bakingapp.utiltiy.widgetUtility;
 
-import android.Manifest;
-import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.os.Environment;
-import android.support.v4.app.ActivityCompat;
 import android.util.Log;
-import android.widget.ArrayAdapter;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.stream.JsonReader;
 import com.greensquare.bakingapp.models.Recipe;
-import com.greensquare.bakingapp.ui.RecipesActivity;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -31,7 +17,6 @@ public class WidgetUtilityClass {
     private static final String RCEIPE_ID = "RCEIPE_ID";
     private static final String RCEIPE_LIST = "RCEIPE_LIST";
     private static final String CLASS_TAG = "WIDGET_CONFIGURATION";
-    int mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
 
 
        public static void saveRecipeID(Context context,  int recipeID,int widgetID) {
@@ -90,7 +75,6 @@ public class WidgetUtilityClass {
                 }
             }
 
-      //  }
 
         return null;
     }

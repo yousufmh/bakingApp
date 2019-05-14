@@ -39,8 +39,9 @@ public class RecipeDetailActivity extends AppCompatActivity {
         Recipe recipe = data.getRecipe();
         fm = getSupportFragmentManager();
         StepsListFragment fragment = new StepsListFragment();
-        fm.beginTransaction().add(R.id.fragment,fragment).commit();
         if(Singalton.getInstance().isTablet()){
+            fm.beginTransaction().add(R.id.fragment,fragment).commit();
+
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
             StepFragment stepFragment = new StepFragment();
             Step step = recipe.getSteps().get(0);
@@ -61,14 +62,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
 
         ingredentBtn.setOnClickListener(view -> {
 
-//            if (ActivityCompat.checkSelfPermission(getApplicationContext()
-//                    , Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-//
-//                ActivityCompat.requestPermissions(RecipeDetailActivity.this,
-//                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},100 );
-//
-//                return;
-////            }
+
             mAppWidgetId = data.getWidgetId();
             if (data.getWidgetId() == AppWidgetManager.INVALID_APPWIDGET_ID) {
                 Toast.makeText(getApplicationContext(),"No Widget Found", Toast.LENGTH_LONG).show();

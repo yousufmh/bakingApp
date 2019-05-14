@@ -1,11 +1,9 @@
 package com.greensquare.bakingapp.ui;
 
 
-import android.annotation.SuppressLint;
-import android.content.res.Configuration;
-import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,20 +11,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.DefaultRenderersFactory;
-import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
 import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
-import com.google.android.exoplayer2.ui.AspectRatioFrameLayout;
 import com.google.android.exoplayer2.ui.PlayerView;
-import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
-import com.google.android.exoplayer2.util.Util;
 import com.greensquare.bakingapp.R;
 import com.greensquare.bakingapp.models.Singalton;
 import com.greensquare.bakingapp.models.Step;
@@ -50,6 +43,7 @@ public class StepFragment extends Fragment {
     private SimpleExoPlayer exoPlayer;
     private Singalton data;
     private boolean visibleToUser =true;
+    private ImageView image ;
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
@@ -57,7 +51,6 @@ public class StepFragment extends Fragment {
         if(exoPlayer!=null){
             exoPlayer.setPlayWhenReady(false);
         }
-
     }
 
     @Override
@@ -80,7 +73,7 @@ public class StepFragment extends Fragment {
         Singalton data = Singalton.getInstance();
         TextView name = view.findViewById(R.id.name);
         TextView stepDescription = view.findViewById(R.id.step_descrption);
-        ImageView image = view.findViewById(R.id.thumbnail);
+        image = view.findViewById(R.id.thumbnail);
         playerUI = view.findViewById(R.id.player);
 
         Log.d(TAG, "Step Thumbnail"+step.getThumbnailURL());
@@ -124,9 +117,6 @@ public class StepFragment extends Fragment {
                 new DefaultRenderersFactory(getActivity()),
                 new DefaultTrackSelector(),new DefaultLoadControl());
 
-
-
-
         playerUI.setPlayer(exoPlayer);
         exoPlayer.setPlayWhenReady(false);
 
@@ -136,47 +126,10 @@ public class StepFragment extends Fragment {
 
         exoPlayer.prepare(source);
 
-       // data.setExoPlayer(exoPlayer);
     }
 
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        if(data.isTablet()){
-            return;
-        }
 
-        if(newConfig.orientation== Configuration.ORIENTATION_LANDSCAPE){
-            Log.d(TAG, "The Orientation is LandScape");
-            enterFullScreen();
-        }else {
-            exitFullScreen();
-        }
 
-    }
-
-    @SuppressLint("InlinedApi")
-    public void enterFullScreen() {
-
-        playerUI.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
-                | View.SYSTEM_UI_FLAG_FULLSCREEN
-                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
-        playerUI.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FIT);
-    }
-
-    @SuppressLint("InlinedApi")
-    public void exitFullScreen() {
-
-        playerUI.setSystemUiVisibility(PlayerView.SYSTEM_UI_FLAG_LOW_PROFILE
-                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                | PlayerView.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                |View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
-                );
-        playerUI.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FIT);
-    }
 
 
     @Override
@@ -190,9 +143,9 @@ public class StepFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if(exoPlayer==null){
-            cratePlayer();
-        }
+//        if(exoPlayer==null){
+//            cratePlayer();
+//        }
     }
 
     @Override
@@ -200,7 +153,9 @@ public class StepFragment extends Fragment {
         super.onPause();
         Log.d(TAG,"Inside onPause");
         if(exoPlayer!=null) {
+
             exoPlayer.setPlayWhenReady(false);
+            exoPlayer.stop();
             exoPlayer.release();
             exoPlayer = null;
            // data.setExoPlayer(exoPlayer);
@@ -215,10 +170,12 @@ public class StepFragment extends Fragment {
 
         if(exoPlayer!=null){
             exoPlayer.release();
+            exoPlayer.stop();
             exoPlayer=null;
           //  data.setExoPlayer(exoPlayer);
             Log.d(TAG,"Inside onStop and Exo is null");
 
         }
     }
+
 }

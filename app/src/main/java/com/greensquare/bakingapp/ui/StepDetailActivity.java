@@ -18,13 +18,12 @@ public class StepDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_step_detail);
         Singalton data = Singalton.getInstance();
 
-        int position = data.getSteps().indexOf(data.getStep());
-
-
+        //int position = data.getSteps().indexOf(data.getStep());
 
         ViewPager pager = findViewById(R.id.view_pager);
         StepPagerAdapter adapter = new StepPagerAdapter(getSupportFragmentManager(),data.getSteps());
         pager.setAdapter(adapter);
+        int position = data.getSteps().indexOf(data.getStep());
         pager.setCurrentItem(position);
 
     }

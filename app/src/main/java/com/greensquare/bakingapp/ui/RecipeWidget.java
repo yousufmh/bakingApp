@@ -36,12 +36,12 @@ public class RecipeWidget extends AppWidgetProvider {
         Recipe recipe = new Recipe();
         int recipeID = WidgetUtilityClass.loadRecipeID(context,appWidgetId);
         boolean empty = recipeID==-1;
-        Log.d(TAG, "The Recipe ID is "+recipeID);
+       // Log.d(TAG, "The Recipe ID is "+recipeID);
         if(!empty){
             Recipe temp = WidgetUtilityClass.loadRecipe(context,recipeID);
             if(temp!=null){
                 recipe = temp;
-                Log.d(TAG, "The Recipe name is "+recipe.getName());
+               // Log.d(TAG, "The Recipe name is "+recipe.getName());
             }else{
                 recipe.setName(context.getResources().getString(R.string.empty_recip));
             }
@@ -54,14 +54,13 @@ public class RecipeWidget extends AppWidgetProvider {
 
         actvityIntent.putExtra("WidegtID", appWidgetId);
         actvityIntent.setAction("android.appwidget.action.APPWIDGET_UPDATE");
-        Log.d(TAG,"WidgetID is "+appWidgetId);
+        //Log.d(TAG,"WidgetID is "+appWidgetId);
         PendingIntent pending = PendingIntent.getActivity(context,0,actvityIntent,PendingIntent.FLAG_UPDATE_CURRENT);
 
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
         intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
 
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.recipe_widget);
-//        views.setTextViewText(R.id.appwidget_text, widgetText);
         views.setTextViewText(R.id.ingredent_widget,recipe.getName());
         if(!empty) {
             views.setViewVisibility(R.id.empty_list, View.INVISIBLE);

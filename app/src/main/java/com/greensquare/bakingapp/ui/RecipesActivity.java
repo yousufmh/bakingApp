@@ -1,10 +1,7 @@
 package com.greensquare.bakingapp.ui;
 
-import android.Manifest;
 import android.appwidget.AppWidgetManager;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.os.Environment;
 import android.os.Parcelable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
@@ -15,21 +12,16 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.View;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.stream.JsonWriter;
+
 import com.greensquare.bakingapp.R;
 import com.greensquare.bakingapp.models.Recipe;
 import com.greensquare.bakingapp.models.Singalton;
 import com.greensquare.bakingapp.utiltiy.adptors.RecipeAdaptor;
+import com.greensquare.bakingapp.utiltiy.espressoTesting.TheIdelingClass;
 import com.greensquare.bakingapp.utiltiy.retrofit.RetrofitConnection;
 import com.greensquare.bakingapp.utiltiy.widgetUtility.WidgetUtilityClass;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class RecipesActivity extends AppCompatActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
@@ -94,13 +86,17 @@ public class RecipesActivity extends AppCompatActivity implements ActivityCompat
 
     private void retofitFetch() {
 
+//        ResourceIdling.theIdlingClass.increament();
+        TheIdelingClass.increamnet();
         connect.getRecipe((recipes, successful) -> {
 
             if (successful){
+
                 recipesArray.clear();
                 recipesArray.addAll(recipes);
                 adaptor.notifyDataSetChanged();
                 WidgetUtilityClass.saveRecipesLocally(getApplicationContext(),recipesArray);
+                TheIdelingClass.decrement();
                 if(savedLayout!=null){
                     rv.getLayoutManager().onRestoreInstanceState(savedLayout);
                 }
