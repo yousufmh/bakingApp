@@ -26,6 +26,7 @@ public class StepsListFragment extends Fragment {
 
 
     public StepsListFragment() {
+        // Required empty public constructor
     }
 
     private StepAdaptor adaptor;
@@ -38,6 +39,7 @@ public class StepsListFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
 
 
         if(savedInstanceState!=null) {

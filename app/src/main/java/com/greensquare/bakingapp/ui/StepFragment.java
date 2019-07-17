@@ -3,7 +3,6 @@ package com.greensquare.bakingapp.ui;
 
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.DefaultRenderersFactory;
 import com.google.android.exoplayer2.ExoPlayerFactory;
@@ -43,8 +43,6 @@ public class StepFragment extends Fragment {
     private SimpleExoPlayer exoPlayer;
     private Singalton data;
     private boolean visibleToUser =true;
-    private long currentPosition=0;
-    private int currentWindow=0;
     private ImageView image ;
 
     @Override
@@ -53,6 +51,8 @@ public class StepFragment extends Fragment {
         if(exoPlayer!=null){
             exoPlayer.setPlayWhenReady(false);
         }
+
+
     }
 
     @Override
@@ -71,11 +71,6 @@ public class StepFragment extends Fragment {
             step.setVideoURL(bundle.getString("VideoURL"));
         }
 
-        if(savedInstanceState!=null&&savedInstanceState.containsKey("CurrentPosition"))
-        {
-            currentPosition = savedInstanceState.getLong("CurrentPosition");
-            currentWindow = savedInstanceState.getInt("CurrentWindow");
-        }
         View view = inflater.inflate(R.layout.fragment_step, container, false);
         Singalton data = Singalton.getInstance();
         TextView name = view.findViewById(R.id.name);
@@ -124,6 +119,9 @@ public class StepFragment extends Fragment {
                 new DefaultRenderersFactory(getActivity()),
                 new DefaultTrackSelector(),new DefaultLoadControl());
 
+
+
+
         playerUI.setPlayer(exoPlayer);
         exoPlayer.setPlayWhenReady(false);
 
@@ -131,20 +129,14 @@ public class StepFragment extends Fragment {
         MediaSource source = new ExtractorMediaSource.Factory(
                 new DefaultHttpDataSourceFactory("BakingApp")).createMediaSource(videoUri);
 
-        exoPlayer.seekTo(currentWindow,currentPosition);
         exoPlayer.prepare(source);
 
+       // data.setExoPlayer(exoPlayer);
     }
 
 
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
 
-        outState.putLong("CurrentPosition",currentPosition);
-        outState.putInt("CurrentWindow",currentWindow);
 
-    }
 
     @Override
     public void onStart() {
@@ -167,9 +159,6 @@ public class StepFragment extends Fragment {
         super.onPause();
         Log.d(TAG,"Inside onPause");
         if(exoPlayer!=null) {
-
-            currentWindow = exoPlayer.getCurrentWindowIndex();
-            currentPosition = exoPlayer.getCurrentPosition();
             exoPlayer.setPlayWhenReady(false);
             exoPlayer.stop();
             exoPlayer.release();
@@ -185,9 +174,6 @@ public class StepFragment extends Fragment {
         Log.d(TAG,"Inside onStop");
 
         if(exoPlayer!=null){
-
-            currentWindow = exoPlayer.getCurrentWindowIndex();
-            currentPosition = exoPlayer.getCurrentPosition();
             exoPlayer.release();
             exoPlayer.stop();
             exoPlayer=null;
@@ -196,5 +182,4 @@ public class StepFragment extends Fragment {
 
         }
     }
-
 }

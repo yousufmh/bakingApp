@@ -1,4 +1,4 @@
-package com.greensquare.bakingapp;
+package com.greensquare.bakingapp.ui;
 
 import android.support.test.espresso.IdlingRegistry;
 import android.support.test.espresso.contrib.RecyclerViewActions;
@@ -7,6 +7,7 @@ import android.support.test.runner.AndroidJUnit4;
 import android.support.v7.widget.RecyclerView;
 import android.util.Size;
 
+import com.greensquare.bakingapp.R;
 import com.greensquare.bakingapp.ui.RecipesActivity;
 import com.greensquare.bakingapp.utiltiy.espressoTesting.TheIdelingClass;
 
@@ -31,7 +32,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static org.hamcrest.Matchers.greaterThan;
 
 @RunWith(AndroidJUnit4.class)
-public class RecipesActivityTest {
+public class RecipesActivityTestPhoneMood {
 
     @Rule
     public ActivityTestRule<RecipesActivity> recipesTest = new ActivityTestRule<>(RecipesActivity.class);
@@ -61,7 +62,6 @@ public class RecipesActivityTest {
         }
         else{
             onView(withId(R.id.recipe_rv)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
-
         }
 
     }

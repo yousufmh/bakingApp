@@ -38,6 +38,7 @@ public class StepPagerAdapter extends FragmentStatePagerAdapter {
         bundle.putString("VideoURL", step.getVideoURL());
 
         fragment.setArguments(bundle);
+        //StepFragment stepFragment = StepFragment.newInstance(step);
         Log.d("StepPager Adapter","Current Step Position "+i);
         Log.d("StepPager Adapter","Current Step is "+step.getShortDescription());
         Log.d("StepPager Adapter","Current Step Thumbnail is "+step.getThumbnailURL());
